@@ -1,20 +1,95 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+That's the default code — our paste didn't save. Replace everything in home.page.html with this:
+html<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Trackify</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-searchbar
+    [(ngModel)]="searchQuery"
+    (ionInput)="onSearch()"
+    (ionClear)="clearSearch()"
+    placeholder="Search tracks or artists...">
+  </ion-searchbar>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <ion-segment [(ngModel)]="selectedSegment" (ionChange)="onSegmentChange()">
+    <ion-segment-button value="tracks">
+      <ion-label>Tracks</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="artists">
+      <ion-label>Artists</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="isSearching">
+    <ion-list *ngIf="selectedSegment === 'tracks'">
+      <ion-item *ngFor="let track of trackResults"
+        (click)="goToTrackDetails(track.artist, track.name)" button>
+        <ion-thumbnail slot="start">
+          <ion-img [src]="track.image[1]['#text'] || 'assets/placeholder.png'"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ track.name }}</h2>
+          <p>{{ track.artist }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="selectedSegment === 'artists'">
+      <ion-item *ngFor="let artist of artistResults"
+        (click)="goToArtistDetails(artist.name)" button>
+        <ion-thumbnail slot="start">
+          <ion-img [src]="artist.image[1]['#text'] || 'assets/placeholder.png'"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ artist.name }}</h2>
+          <p>{{ artist.listeners }} listeners</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="!isSearching">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Trending Tracks</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-spinner *ngIf="isLoading"></ion-spinner>
+        <ion-list>
+          <ion-item *ngFor="let track of topTracks"
+            (click)="goToTrackDetails(track.artist.name, track.name)" button>
+            <ion-thumbnail slot="start">
+              <ion-img [src]="track.image[1]['#text'] || 'assets/placeholder.png'"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h2>{{ track.name }}</h2>
+              <p>{{ track.artist.name }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Top Artists</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let artist of topArtists"
+            (click)="goToArtistDetails(artist.name)" button>
+            <ion-thumbnail slot="start">
+              <ion-img [src]="artist.image[1]['#text'] || 'assets/placeholder.png'"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h2>{{ artist.name }}</h2>
+              <p>{{ artist.listeners }} listeners</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
