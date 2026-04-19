@@ -1,13 +1,37 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>favourites</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Favourites</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">favourites</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div *ngIf="favourites.length === 0" class="empty-state">
+    <ion-icon name="heart-outline"></ion-icon>
+    <h2>No Favourites Yet</h2>
+    <p>Start adding tracks and artists to your favourites</p>
+  </div>
+
+  <ion-list *ngIf="favourites.length > 0">
+    <ion-item
+      *ngFor="let item of favourites"
+      (click)="goToItem(item)"
+      button>
+      <ion-icon
+        slot="start"
+        [name]="item.type === 'track' ? 'musical-note-outline' : 'person-outline'"
+        style="color: #3f6675">
+      </ion-icon>
+      <ion-label>
+        <h2>{{ item.name }}</h2>
+        <p *ngIf="item.type === 'track'">{{ item.artist }}</p>
+        <p *ngIf="item.type === 'artist'">Artist</p>
+      </ion-label>
+      <ion-button
+        slot="end"
+        fill="clear"
+        (click)="$event.stopPropagation(); removeFavourite(item.id)">
+        <ion-icon name="trash-outline" style="color: red"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

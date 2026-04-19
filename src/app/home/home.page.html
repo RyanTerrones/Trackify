@@ -1,5 +1,4 @@
-That's the default code — our paste didn't save. Replace everything in home.page.html with this:
-html<ion-header>
+<ion-header>
   <ion-toolbar color="primary">
     <ion-title>Trackify</ion-title>
   </ion-toolbar>
@@ -27,7 +26,7 @@ html<ion-header>
       <ion-item *ngFor="let track of trackResults"
         (click)="goToTrackDetails(track.artist, track.name)" button>
         <ion-thumbnail slot="start">
-          <ion-img [src]="track.image[1]['#text'] || 'assets/placeholder.png'"></ion-img>
+          <ion-img [src]="track.image[1]['#text'] || 'https://via.placeholder.com/150'"></ion-img>
         </ion-thumbnail>
         <ion-label>
           <h2>{{ track.name }}</h2>
@@ -40,7 +39,7 @@ html<ion-header>
       <ion-item *ngFor="let artist of artistResults"
         (click)="goToArtistDetails(artist.name)" button>
         <ion-thumbnail slot="start">
-          <ion-img [src]="artist.image[1]['#text'] || 'assets/placeholder.png'"></ion-img>
+          <ion-img [src]="artist.image[1]['#text'] || 'https://via.placeholder.com/150'"></ion-img>
         </ion-thumbnail>
         <ion-label>
           <h2>{{ artist.name }}</h2>
@@ -61,7 +60,7 @@ html<ion-header>
           <ion-item *ngFor="let track of topTracks"
             (click)="goToTrackDetails(track.artist.name, track.name)" button>
             <ion-thumbnail slot="start">
-              <ion-img [src]="track.image[1]['#text'] || 'assets/placeholder.png'"></ion-img>
+              <ion-img [src]="track.image[1]['#text'] || 'https://via.placeholder.com/150'"></ion-img>
             </ion-thumbnail>
             <ion-label>
               <h2>{{ track.name }}</h2>
@@ -81,7 +80,7 @@ html<ion-header>
           <ion-item *ngFor="let artist of topArtists"
             (click)="goToArtistDetails(artist.name)" button>
             <ion-thumbnail slot="start">
-              <ion-img [src]="artist.image[1]['#text'] || 'assets/placeholder.png'"></ion-img>
+              <ion-img [src]="artist.image[1]['#text'] || 'https://via.placeholder.com/150'"></ion-img>
             </ion-thumbnail>
             <ion-label>
               <h2>{{ artist.name }}</h2>

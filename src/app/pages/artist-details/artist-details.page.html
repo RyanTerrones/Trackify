@@ -1,13 +1,81 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>artist-details</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ artistName }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleFavourite()">
+        <ion-icon [name]="isFavourite ? 'heart' : 'heart-outline'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">artist-details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
+
+  <div *ngIf="!isLoading">
+    <div class="artist-hero">
+      <img
+        [src]="deezerArtist?.picture_xl || 'https://via.placeholder.com/150'"
+        alt="Artist Image"
+        class="artist-image"/>
+      <div class="artist-overlay">
+        <h1>{{ artistInfo?.name }}</h1>
+        <p>{{ deezerArtist?.nb_fan | number }} fans</p>
+      </div>
+    </div>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>About</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p *ngIf="artistInfo?.bio?.summary">
+          {{ artistInfo.bio.summary }}
+        </p>
+        <p *ngIf="!artistInfo?.bio?.summary">
+          No biography available for this artist.
+        </p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Top Tracks</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item
+            *ngFor="let track of topTracks"
+            (click)="goToTrackDetails(track.name)"
+            button>
+            <ion-thumbnail slot="start">
+              <ion-img [src]="track.image[1]['#text'] || 'https://via.placeholder.com/150'"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h2>{{ track.name }}</h2>
+              <p>{{ track.playcount | number }} plays</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="artistInfo?.tags?.tag">
+      <ion-card-header>
+        <ion-card-title>Tags</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="tags">
+          <span
+            *ngFor="let tag of artistInfo.tags.tag"
+            class="tag">
+            {{ tag.name }}
+          </span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

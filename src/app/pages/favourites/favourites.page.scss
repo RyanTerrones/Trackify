@@ -1,0 +1,48 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  text-align: center;
+
+  ion-icon {
+    font-size: 80px;
+    color: #3f6675;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: #888;
+    font-size: 14px;
+  }
+}
+
+ion-item {
+  --background: #2b2b2b;
+  --color: white;
+  --border-color: #3a3a3a;
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  h2 {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  p {
+    color: #888;
+    font-size: 12px;
+  }
+}

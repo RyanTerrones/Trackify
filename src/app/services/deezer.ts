@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class Deezer {
 
-  private baseUrl = 'https://api.deezer.com';
+  private baseUrl = 'https://corsproxy.io/?https://api.deezer.com';
 
   constructor(private http: HttpClient){}
 

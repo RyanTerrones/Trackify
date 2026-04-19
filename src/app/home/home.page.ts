@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonSegment, IonSegmentButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonList, IonItem, IonThumbnail, IonImg, IonSpinner, IonIcon } from '@ionic/angular/standalone';
-import { Lastfm } from 'src/app/services/lastfm';
-import { Deezer } from 'src/app/services/deezer';
-import { StorageService } from 'src/app/services/storage';
+import { Router, ActivatedRoute } from '@angular/router';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonSegment, IonSegmentButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonThumbnail, IonImg, IonSpinner } from '@ionic/angular/standalone';
+import { Lastfm } from '../services/lastfm';
+import { Deezer } from '../services/deezer';
+import { StorageService } from '../services/storage';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonSegment, IonSegmentButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonList, IonItem, IonThumbnail, IonImg, IonSpinner, IonIcon]
+  imports: [CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonSegment, IonSegmentButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonThumbnail, IonImg, IonSpinner]
 })
-
 export class HomePage implements OnInit {
 
   searchQuery: string = '';
@@ -31,12 +30,19 @@ export class HomePage implements OnInit {
     private lastfm: Lastfm,
     private deezer: Deezer,
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.loadTopTracks();
     this.loadTopArtists();
+    this.route.queryParams.subscribe(params => {
+      if (params['search']) {
+        this.searchQuery = params['search'];
+        this.onSearch();
+      }
+    });
   }
 
   loadTopTracks() {
