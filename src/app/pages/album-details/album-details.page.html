@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ album?.title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleFavourite()">
+        <ion-icon [name]="isFavourite ? 'heart' : 'heart-outline'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
+
+  <div *ngIf="!isLoading">
+    <div class="album-hero">
+      <img [src]="album?.cover_big || 'https://via.placeholder.com/400'" alt="Album Cover" class="album-image" />
+      <div class="album-overlay">
+        <h1>{{ album?.title }}</h1>
+        <p>{{ album?.artist?.name }}</p>
+        <p>Released: {{ formatDate(album?.release_date) }}</p>
+        <p>{{ album?.nb_tracks }} tracks</p>
+      </div>
+    </div>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Your Rating</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="stars">
+          <ion-icon *ngFor="let star of [1,2,3,4,5]" [name]="star <= userRating ? 'star' : 'star-outline'"
+            (click)="setRating(star)" style="font-size:32px; cursor:pointer; color:#3f6675">
+          </ion-icon>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Tracks</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let track of tracks; let i = index" (click)="goToTrackDetails(track)" button>
+            <div slot="start" class="track-number">{{ i + 1 }}</div>
+            <ion-label>
+              <h2>{{ track.title }}</h2>
+              <p class="artists-line">
+                <span class="main-artist">{{ track.artist?.name || album.artist.name }}</span>
+                <span *ngIf="getFeatures(track)" class="features">
+                  ft. {{ getFeatures(track) }}
+                </span>
+              </p>
+            </ion-label>
+            <div slot="end" class="track-duration">{{ track.duration | duration }}</div>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -18,7 +18,7 @@
   <div *ngIf="!isLoading">
     <div class="artist-hero">
       <img
-        [src]="deezerArtist?.picture_xl || 'https://via.placeholder.com/150'"
+        [src]="deezerArtist?.picture_xl || 'https://via.placeholder.com/400'"
         alt="Artist Image"
         class="artist-image"/>
       <div class="artist-overlay">
@@ -33,7 +33,7 @@
       </ion-card-header>
       <ion-card-content>
         <p *ngIf="artistInfo?.bio?.summary">
-          {{ artistInfo.bio.summary }}
+          {{ artistInfo.bio.summary | slice:0:300 }}...
         </p>
         <p *ngIf="!artistInfo?.bio?.summary">
           No biography available for this artist.
@@ -52,11 +52,29 @@
             (click)="goToTrackDetails(track.name)"
             button>
             <ion-thumbnail slot="start">
-              <ion-img [src]="track.image[1]['#text'] || 'https://via.placeholder.com/150'"></ion-img>
+              <ion-img [src]="track.image_url || 'https://via.placeholder.com/150'"></ion-img>
             </ion-thumbnail>
             <ion-label>
               <h2>{{ track.name }}</h2>
               <p>{{ track.playcount | number }} plays</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="topAlbums.length > 0">
+      <ion-card-header>
+        <ion-card-title>Albums</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let album of topAlbums" (click)="goToAlbum(album.id)" button>
+            <ion-thumbnail slot="start">
+              <ion-img [src]="album.cover || 'https://via.placeholder.com/150'"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h2>{{ album.title }}</h2>
             </ion-label>
           </ion-item>
         </ion-list>
@@ -69,9 +87,7 @@
       </ion-card-header>
       <ion-card-content>
         <div class="tags">
-          <span
-            *ngFor="let tag of artistInfo.tags.tag"
-            class="tag">
+          <span *ngFor="let tag of artistInfo.tags.tag" class="tag">
             {{ tag.name }}
           </span>
         </div>

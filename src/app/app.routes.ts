@@ -29,5 +29,9 @@ export const routes: Routes = [
   {
     path: 'charts',
     loadComponent: () => import('./pages/charts/charts.page').then(m => m.ChartsPage)
+  },
+  {
+    path: 'album-details/:id',
+    loadComponent: () => import('./pages/album-details/album-details.page').then(m => m.AlbumDetailsPage)
   }
 ];

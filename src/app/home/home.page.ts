@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonSegment, IonSegmentButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonThumbnail, IonImg, IonSpinner } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonSegment, IonSegmentButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonThumbnail, IonImg, IonSpinner, IonButton } from '@ionic/angular/standalone';
 import { Lastfm } from '../services/lastfm';
 import { Deezer } from '../services/deezer';
 import { StorageService } from '../services/storage';
@@ -12,7 +12,7 @@ import { StorageService } from '../services/storage';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonSegment, IonSegmentButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonThumbnail, IonImg, IonSpinner]
+  imports: [CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonSegment, IonSegmentButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonThumbnail, IonImg, IonSpinner, IonButton]
 })
 export class HomePage implements OnInit {
 
@@ -23,8 +23,11 @@ export class HomePage implements OnInit {
 
   trackResults: any[] = [];
   artistResults: any[] = [];
-  topTracks: any[] = [];
-  topArtists: any[] = [];
+
+  trackOfTheDay: any = null;
+  trackOfTheDayImage: string = '';
+  artistOfTheDay: any = null;
+  artistOfTheDayImage: string = '';
 
   constructor(
     private lastfm: Lastfm,
@@ -35,8 +38,7 @@ export class HomePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadTopTracks();
-    this.loadTopArtists();
+    this.loadFeatured();
     this.route.queryParams.subscribe(params => {
       if (params['search']) {
         this.searchQuery = params['search'];
@@ -45,17 +47,25 @@ export class HomePage implements OnInit {
     });
   }
 
-  loadTopTracks() {
+  loadFeatured() {
     this.isLoading = true;
     this.lastfm.getTopTracks().subscribe((data: any) => {
-      this.topTracks = data.tracks.track;
+      this.trackOfTheDay = data.tracks.track[0];
+      this.deezer.searchTracks(`${this.trackOfTheDay.name} ${this.trackOfTheDay.artist.name}`).subscribe((deezerData: any) => {
+        if (deezerData.data && deezerData.data.length > 0) {
+          this.trackOfTheDayImage = deezerData.data[0].album.cover_big;
+        }
+      });
       this.isLoading = false;
     });
-  }
 
-  loadTopArtists() {
     this.lastfm.getTopArtists().subscribe((data: any) => {
-      this.topArtists = data.artists.artist;
+      this.artistOfTheDay = data.artists.artist[0];
+      this.deezer.searchArtists(this.artistOfTheDay.name).subscribe((deezerData: any) => {
+        if (deezerData.data && deezerData.data.length > 0) {
+          this.artistOfTheDayImage = deezerData.data[0].picture_big;
+        }
+      });
     });
   }
 
@@ -65,16 +75,35 @@ export class HomePage implements OnInit {
       return;
     }
     this.isSearching = true;
-    this.storageService.saveSearchHistory(this.searchQuery);
 
     if (this.selectedSegment === 'tracks') {
       this.lastfm.searchTracks(this.searchQuery).subscribe((data: any) => {
         this.trackResults = data.results.trackmatches.track;
+        this.trackResults.forEach(track => {
+          this.deezer.searchTracks(`${track.name} ${track.artist}`).subscribe((deezerData: any) => {
+            if (deezerData.data && deezerData.data.length > 0) {
+              track.image_url = deezerData.data[0].album.cover_medium;
+            }
+          });
+        });
       });
     } else {
       this.lastfm.searchArtists(this.searchQuery).subscribe((data: any) => {
         this.artistResults = data.results.artistmatches.artist;
+        this.artistResults.forEach(artist => {
+          this.deezer.searchArtists(artist.name).subscribe((deezerData: any) => {
+            if (deezerData.data && deezerData.data.length > 0) {
+              artist.image_url = deezerData.data[0].picture_medium;
+            }
+          });
+        });
       });
+    }
+  }
+
+  onSearchbarBlur() {
+    if (this.searchQuery.trim().length > 2) {
+      this.storageService.saveSearchHistory(this.searchQuery);
     }
   }
 

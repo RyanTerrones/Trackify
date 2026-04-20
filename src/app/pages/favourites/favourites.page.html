@@ -16,11 +16,9 @@
       *ngFor="let item of favourites"
       (click)="goToItem(item)"
       button>
-      <ion-icon
-        slot="start"
-        [name]="item.type === 'track' ? 'musical-note-outline' : 'person-outline'"
-        style="color: #3f6675">
-      </ion-icon>
+      <ion-thumbnail slot="start">
+        <ion-img [src]="item.image_url || 'https://via.placeholder.com/150'"></ion-img>
+      </ion-thumbnail>
       <ion-label>
         <h2>{{ item.name }}</h2>
         <p *ngIf="item.type === 'track'">{{ item.artist }}</p>

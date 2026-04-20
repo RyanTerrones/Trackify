@@ -25,7 +25,7 @@ export class ChartsPage implements OnInit {
     private lastfm: Lastfm,
     private deezer: Deezer,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadCharts();
@@ -36,11 +36,25 @@ export class ChartsPage implements OnInit {
 
     this.lastfm.getTopTracks().subscribe((data: any) => {
       this.topTracks = data.tracks.track;
+      this.topTracks.forEach(track => {
+        this.deezer.searchTracks(`${track.name} ${track.artist.name}`).subscribe((deezerData: any) => {
+          if (deezerData.data && deezerData.data.length > 0) {
+            track.image_url = deezerData.data[0].album.cover_medium;
+          }
+        });
+      });
       this.isLoading = false;
     });
 
     this.lastfm.getTopArtists().subscribe((data: any) => {
       this.topArtists = data.artists.artist;
+      this.topArtists.forEach(artist => {
+        this.deezer.searchArtists(artist.name).subscribe((deezerData: any) => {
+          if (deezerData.data && deezerData.data.length > 0) {
+            artist.image_url = deezerData.data[0].picture_medium;
+          }
+        });
+      });
     });
 
     this.deezer.getCharts().subscribe((data: any) => {
