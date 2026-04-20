@@ -1,9 +1,14 @@
 <ion-header>
   <ion-toolbar color="primary">
+    <ion-title style="text-align:center; width:100%">Trackify</ion-title>
+  </ion-toolbar>
+  <ion-toolbar style="--background:#2b2b2b">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ artistName }}</ion-title>
+    <ion-title style="text-align:center; color:white; font-size:16px">
+      {{ artistName }}
+    </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="toggleFavourite()">
         <ion-icon [name]="isFavourite ? 'heart' : 'heart-outline'"></ion-icon>

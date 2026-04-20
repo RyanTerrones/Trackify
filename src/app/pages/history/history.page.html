@@ -1,11 +1,9 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Search History</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="clearHistory()" *ngIf="searchHistory.length > 0">
-        Clear All
-      </ion-button>
-    </ion-buttons>
+    <ion-title style="text-align:center; width:100%">Trackify</ion-title>
+  </ion-toolbar>
+  <ion-toolbar style="--background:#2b2b2b">
+    <ion-title class="page-title">History</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,16 +14,21 @@
     <p>Your recent searches will appear here</p>
   </div>
 
-  <ion-list *ngIf="searchHistory.length > 0">
-    <ion-item
-      *ngFor="let query of searchHistory"
-      (click)="searchAgain(query)"
-      button>
-      <ion-icon slot="start" name="search-outline" style="color: #3f6675"></ion-icon>
-      <ion-label>
-        <h2>{{ query }}</h2>
-      </ion-label>
-      <ion-icon slot="end" name="time-outline" style="color: #888"></ion-icon>
-    </ion-item>
-  </ion-list>
+  <div *ngIf="searchHistory.length > 0">
+    <ion-list>
+      <ion-item *ngFor="let query of searchHistory" (click)="searchAgain(query)" button>
+        <ion-icon slot="start" name="search-outline" style="color: #3f6675"></ion-icon>
+        <ion-label>
+          <h2>{{ query }}</h2>
+        </ion-label>
+        <ion-icon slot="end" name="time-outline" style="color: #888"></ion-icon>
+      </ion-item>
+    </ion-list>
+
+    <div class="clear-all-container">
+      <ion-button fill="outline" (click)="clearHistory()" style="--border-color:white; --color:white">
+        Clear All
+      </ion-button>
+    </div>
+  </div>
 </ion-content>

@@ -45,3 +45,9 @@ ion-item {
 ion-button {
   --color: #3f6675;
 }
+
+.clear-all-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+}

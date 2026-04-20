@@ -1,9 +1,14 @@
 <ion-header>
   <ion-toolbar color="primary">
+    <ion-title style="text-align:center; width:100%">Trackify</ion-title>
+  </ion-toolbar>
+  <ion-toolbar style="--background:#2b2b2b">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ album?.title }}</ion-title>
+    <ion-title style="text-align:center; color:white; font-size:16px">
+      {{ album?.title }}
+    </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="toggleFavourite()">
         <ion-icon [name]="isFavourite ? 'heart' : 'heart-outline'"></ion-icon>
@@ -17,7 +22,10 @@
 
   <div *ngIf="!isLoading">
     <div class="album-hero">
-      <img [src]="album?.cover_big || 'https://via.placeholder.com/400'" alt="Album Cover" class="album-image" />
+      <img
+        [src]="album?.cover_big || 'https://via.placeholder.com/400'"
+        alt="Album Cover"
+        class="album-image"/>
       <div class="album-overlay">
         <h1>{{ album?.title }}</h1>
         <p>{{ album?.artist?.name }}</p>
@@ -32,8 +40,11 @@
       </ion-card-header>
       <ion-card-content>
         <div class="stars">
-          <ion-icon *ngFor="let star of [1,2,3,4,5]" [name]="star <= userRating ? 'star' : 'star-outline'"
-            (click)="setRating(star)" style="font-size:32px; cursor:pointer; color:#3f6675">
+          <ion-icon
+            *ngFor="let star of [1,2,3,4,5]"
+            [name]="star <= userRating ? 'star' : 'star-outline'"
+            (click)="setRating(star)"
+            style="font-size:32px; cursor:pointer; color:#3f6675">
           </ion-icon>
         </div>
       </ion-card-content>
@@ -45,7 +56,10 @@
       </ion-card-header>
       <ion-card-content>
         <ion-list>
-          <ion-item *ngFor="let track of tracks; let i = index" (click)="goToTrackDetails(track)" button>
+          <ion-item
+            *ngFor="let track of tracks; let i = index"
+            (click)="goToTrackDetails(track)"
+            button>
             <div slot="start" class="track-number">{{ i + 1 }}</div>
             <ion-label>
               <h2>{{ track.title }}</h2>

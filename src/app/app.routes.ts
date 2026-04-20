@@ -33,5 +33,10 @@ export const routes: Routes = [
   {
     path: 'album-details/:id',
     loadComponent: () => import('./pages/album-details/album-details.page').then(m => m.AlbumDetailsPage)
+  },
+  {
+    path: 'genre',
+    loadComponent: () => import('./pages/genre/genre.page').then(m => m.GenrePage)
   }
+
 ];

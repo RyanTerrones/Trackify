@@ -4,10 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Share } from '@capacitor/share';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton, IonIcon, IonSpinner, IonItem, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { heartOutline, heart, shareOutline, star, starOutline } from 'ionicons/icons';
+import { heartOutline, heart, shareOutline, star, starOutline, playOutline, pauseOutline } from 'ionicons/icons';
 import { Lastfm } from '../../services/lastfm';
 import { Deezer } from '../../services/deezer';
 import { StorageService } from '../../services/storage';
+import { PlayerService } from '../../services/player';
 
 @Component({
   selector: 'app-track-details',
@@ -25,15 +26,17 @@ export class TrackDetailsPage implements OnInit {
   isLoading: boolean = true;
   isFavourite: boolean = false;
   userRating: number = 0;
+  isPlaying: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private lastfm: Lastfm,
     private deezer: Deezer,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private playerService: PlayerService
   ) {
-    addIcons({ heartOutline, heart, shareOutline, star, starOutline });
+    addIcons({ heartOutline, heart, shareOutline, star, starOutline, playOutline, pauseOutline });
   }
 
   ngOnInit() {
@@ -45,12 +48,14 @@ export class TrackDetailsPage implements OnInit {
   loadTrackInfo() {
     this.lastfm.getTrackInfo(this.artist, this.track).subscribe((data: any) => {
       this.trackInfo = data.track;
+      console.log(data.track);
       this.isLoading = false;
     });
 
     this.deezer.searchTracks(`${this.track} ${this.artist}`).subscribe((data: any) => {
       if (data.data && data.data.length > 0) {
         this.deezerTrack = data.data[0];
+        this.playerService.setQueue(data.data);
       }
     });
 
@@ -61,6 +66,21 @@ export class TrackDetailsPage implements OnInit {
     this.storageService.getRating(this.track).then(rating => {
       this.userRating = rating;
     });
+
+    this.playerService.isPlaying$.subscribe(playing => {
+      this.isPlaying = playing;
+    });
+  }
+
+  playTrack() {
+    if (this.deezerTrack) {
+      this.playerService.playTrack(this.deezerTrack);
+      this.isPlaying = true;
+    }
+  }
+
+  togglePlay() {
+    this.playerService.togglePlay();
   }
 
   toggleFavourite() {

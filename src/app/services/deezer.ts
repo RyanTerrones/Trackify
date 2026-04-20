@@ -39,4 +39,8 @@ export class Deezer {
     return this.http.get(`${this.baseUrl}/album/${id}`);
   }
 
+  getGenres(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/genre`);
+}
+
 }

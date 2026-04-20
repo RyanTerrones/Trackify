@@ -1,5 +1,6 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
+  <app-mini-player></app-mini-player>
   <ion-tabs>
     <ion-tab-bar slot="bottom">
       <ion-tab-button tab="home" href="/home">
@@ -12,14 +13,14 @@
         <ion-label>Charts</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="history" href="/history">
-        <ion-icon name="time-outline"></ion-icon>
-        <ion-label>History</ion-label>
-      </ion-tab-button>
-
       <ion-tab-button tab="favourites" href="/favourites">
         <ion-icon name="heart-outline"></ion-icon>
         <ion-label>Favourites</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="history" href="/history">
+        <ion-icon name="time-outline"></ion-icon>
+        <ion-label>History</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

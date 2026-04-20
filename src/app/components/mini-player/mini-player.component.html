@@ -1,0 +1,35 @@
+<div class="mini-player" *ngIf="currentTrack">
+  <div class="progress-bar">
+    <div class="progress-fill" [style.width.%]="progress"></div>
+  </div>
+
+  <div class="player-content">
+    <img
+      [src]="currentTrack.album?.cover_medium || 'https://via.placeholder.com/150'"
+      class="track-art"
+      alt="Album Art"/>
+
+    <div class="track-info">
+      <p class="track-name">{{ currentTrack.title }}</p>
+      <p class="track-artist">{{ currentTrack.artist?.name }}</p>
+    </div>
+
+    <div class="player-controls">
+      <ion-button fill="clear" (click)="playPrevious()">
+        <ion-icon name="play-skip-back-outline" style="color:white"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" (click)="togglePlay()">
+        <ion-icon [name]="isPlaying ? 'pause-outline' : 'play-outline'" style="color:white; font-size:28px"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" (click)="playNext()">
+        <ion-icon name="play-skip-forward-outline" style="color:white"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="player-actions">
+      <ion-button fill="clear" (click)="toggleFavourite()">
+        <ion-icon [name]="isFavourite ? 'heart' : 'heart-outline'" style="color:#3f6675"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</div>

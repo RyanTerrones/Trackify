@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Trackify</ion-title>
+    <ion-title style="text-align:center; width:100%">Trackify</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -54,38 +54,64 @@
     <ion-spinner *ngIf="isLoading"></ion-spinner>
 
     <div *ngIf="!isLoading">
-      <ion-card *ngIf="trackOfTheDay" class="featured-card"
-        (click)="goToTrackDetails(trackOfTheDay.artist.name, trackOfTheDay.name)">
-        <div class="featured-inner">
+      <div class="featured-row">
+        <div class="featured-card"
+          (click)="goToTrackDetails(trackOfTheDay.artist.name, trackOfTheDay.name)">
           <img [src]="trackOfTheDayImage || 'https://via.placeholder.com/400'"
             class="featured-image" alt="Track of the Day"/>
           <div class="featured-overlay">
             <p class="featured-label">Track of the Day</p>
-            <h2>{{ trackOfTheDay.name }}</h2>
-            <p>{{ trackOfTheDay.artist.name }}</p>
-            <p>{{ trackOfTheDay.listeners | number }} listeners</p>
-            <ion-button fill="solid" color="primary" size="small">
-              Listen Now
-            </ion-button>
+            <h2>{{ trackOfTheDay?.name }}</h2>
+            <p>{{ trackOfTheDay?.artist?.name }}</p>
           </div>
         </div>
-      </ion-card>
 
-      <ion-card *ngIf="artistOfTheDay" class="featured-card"
-        (click)="goToArtistDetails(artistOfTheDay.name)">
-        <div class="featured-inner">
+        <div class="featured-card"
+          (click)="goToArtistDetails(artistOfTheDay?.name)">
           <img [src]="artistOfTheDayImage || 'https://via.placeholder.com/400'"
             class="featured-image" alt="Artist of the Day"/>
           <div class="featured-overlay">
             <p class="featured-label">Artist of the Day</p>
-            <h2>{{ artistOfTheDay.name }}</h2>
-            <p>{{ artistOfTheDay.listeners | number }} listeners</p>
-            <ion-button fill="solid" color="primary" size="small">
-              View Artist
-            </ion-button>
+            <h2>{{ artistOfTheDay?.name }}</h2>
+            <p>{{ artistOfTheDay?.listeners | number }} listeners</p>
           </div>
         </div>
-      </ion-card>
+      </div>
+
+      <div class="discovery-section">
+        <h2 class="section-title">Discovery</h2>
+        <div class="genre-grid">
+          <div
+            *ngFor="let genre of genres"
+            class="genre-box"
+            [class.active]="selectedGenre === genre.name"
+            (click)="selectGenre(genre)">
+            <img [src]="genre.picture_medium || 'https://via.placeholder.com/150'" class="genre-image"/>
+            <div class="genre-overlay">
+              <p>{{ genre.name }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="selectedGenre" class="genre-tracks" id="genre-tracks">
+          <h3 class="genre-tracks-title">{{ selectedGenre }}</h3>
+          <ion-spinner *ngIf="isLoadingGenre"></ion-spinner>
+          <ion-list *ngIf="!isLoadingGenre">
+            <ion-item
+              *ngFor="let track of genreTracks"
+              (click)="goToTrackDetails(track.artist, track.name)"
+              button>
+              <ion-thumbnail slot="start">
+                <ion-img [src]="track.image_url || 'https://via.placeholder.com/150'"></ion-img>
+              </ion-thumbnail>
+              <ion-label>
+                <h2>{{ track.name }}</h2>
+                <p>{{ track.artist }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

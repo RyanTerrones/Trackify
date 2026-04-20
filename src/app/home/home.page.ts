@@ -29,13 +29,19 @@ export class HomePage implements OnInit {
   artistOfTheDay: any = null;
   artistOfTheDayImage: string = '';
 
+  selectedGenre: string = '';
+  genreTracks: any[] = [];
+  isLoadingGenre: boolean = false;
+
+  genres: any[] = [];
+
   constructor(
     private lastfm: Lastfm,
     private deezer: Deezer,
     private storageService: StorageService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadFeatured();
@@ -66,6 +72,36 @@ export class HomePage implements OnInit {
           this.artistOfTheDayImage = deezerData.data[0].picture_big;
         }
       });
+    });
+
+    this.deezer.getGenres().subscribe((data: any) => {
+      this.genres = data.data.filter((g: any) => g.id !== 0);
+    });
+  }
+
+  selectGenre(genre: any) {
+    if (this.selectedGenre === genre.name) {
+      this.selectedGenre = '';
+      this.genreTracks = [];
+      return;
+    }
+    this.selectedGenre = genre.name;
+    this.isLoadingGenre = true;
+    this.genreTracks = [];
+    this.lastfm.searchTracks(genre.name).subscribe((data: any) => {
+      this.genreTracks = data.results.trackmatches.track.slice(0, 10);
+      this.genreTracks.forEach(track => {
+        this.deezer.searchTracks(`${track.name} ${track.artist}`).subscribe((deezerData: any) => {
+          if (deezerData.data && deezerData.data.length > 0) {
+            track.image_url = deezerData.data[0].album.cover_medium;
+          }
+        });
+      });
+      this.isLoadingGenre = false;
+      setTimeout(() => {
+        const el = document.getElementById('genre-tracks');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     });
   }
 
