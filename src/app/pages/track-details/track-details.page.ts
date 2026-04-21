@@ -114,4 +114,8 @@ export class TrackDetailsPage implements OnInit {
   goToArtist() {
     this.router.navigate(['/artist-details', this.artist]);
   }
+
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 }

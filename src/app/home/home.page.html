@@ -1,16 +1,17 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title style="text-align:center; width:100%">Trackify</ion-title>
+  <ion-toolbar style="--background:#85d0ed; --min-height:50px">
+    <div style="display:flex; justify-content:center; align-items:center; height:50px">
+      <div
+        style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center">
+        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block" />
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar
-    [(ngModel)]="searchQuery"
-    (ionInput)="onSearch()"
-    (ionBlur)="onSearchbarBlur()"
-    (ionClear)="clearSearch()"
-    placeholder="Search tracks or artists...">
+  <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="onSearch()" (ionBlur)="onSearchbarBlur()"
+    (ionClear)="clearSearch()" placeholder="Search tracks or artists...">
   </ion-searchbar>
 
   <ion-segment *ngIf="isSearching" [(ngModel)]="selectedSegment" (ionChange)="onSegmentChange()">
@@ -24,8 +25,7 @@
 
   <div *ngIf="isSearching">
     <ion-list *ngIf="selectedSegment === 'tracks'">
-      <ion-item *ngFor="let track of trackResults"
-        (click)="goToTrackDetails(track.artist, track.name)" button>
+      <ion-item *ngFor="let track of trackResults" (click)="goToTrackDetails(track.artist, track.name)" button>
         <ion-thumbnail slot="start">
           <ion-img [src]="track.image_url || 'https://via.placeholder.com/150'"></ion-img>
         </ion-thumbnail>
@@ -37,8 +37,7 @@
     </ion-list>
 
     <ion-list *ngIf="selectedSegment === 'artists'">
-      <ion-item *ngFor="let artist of artistResults"
-        (click)="goToArtistDetails(artist.name)" button>
+      <ion-item *ngFor="let artist of artistResults" (click)="goToArtistDetails(artist.name)" button>
         <ion-thumbnail slot="start">
           <ion-img [src]="artist.image_url || 'https://via.placeholder.com/150'"></ion-img>
         </ion-thumbnail>
@@ -55,10 +54,9 @@
 
     <div *ngIf="!isLoading">
       <div class="featured-row">
-        <div class="featured-card"
-          (click)="goToTrackDetails(trackOfTheDay.artist.name, trackOfTheDay.name)">
-          <img [src]="trackOfTheDayImage || 'https://via.placeholder.com/400'"
-            class="featured-image" alt="Track of the Day"/>
+        <div class="featured-card" (click)="goToTrackDetails(trackOfTheDay.artist.name, trackOfTheDay.name)">
+          <img [src]="trackOfTheDayImage || 'https://via.placeholder.com/400'" class="featured-image"
+            alt="Track of the Day" />
           <div class="featured-overlay">
             <p class="featured-label">Track of the Day</p>
             <h2>{{ trackOfTheDay?.name }}</h2>
@@ -66,10 +64,9 @@
           </div>
         </div>
 
-        <div class="featured-card"
-          (click)="goToArtistDetails(artistOfTheDay?.name)">
-          <img [src]="artistOfTheDayImage || 'https://via.placeholder.com/400'"
-            class="featured-image" alt="Artist of the Day"/>
+        <div class="featured-card" (click)="goToArtistDetails(artistOfTheDay?.name)">
+          <img [src]="artistOfTheDayImage || 'https://via.placeholder.com/400'" class="featured-image"
+            alt="Artist of the Day" />
           <div class="featured-overlay">
             <p class="featured-label">Artist of the Day</p>
             <h2>{{ artistOfTheDay?.name }}</h2>
@@ -81,12 +78,9 @@
       <div class="discovery-section">
         <h2 class="section-title">Discovery</h2>
         <div class="genre-grid">
-          <div
-            *ngFor="let genre of genres"
-            class="genre-box"
-            [class.active]="selectedGenre === genre.name"
+          <div *ngFor="let genre of genres" class="genre-box" [class.active]="selectedGenre === genre.name"
             (click)="selectGenre(genre)">
-            <img [src]="genre.picture_medium || 'https://via.placeholder.com/150'" class="genre-image"/>
+            <img [src]="genre.picture_medium || 'https://via.placeholder.com/150'" class="genre-image" />
             <div class="genre-overlay">
               <p>{{ genre.name }}</p>
             </div>
@@ -97,10 +91,7 @@
           <h3 class="genre-tracks-title">{{ selectedGenre }}</h3>
           <ion-spinner *ngIf="isLoadingGenre"></ion-spinner>
           <ion-list *ngIf="!isLoadingGenre">
-            <ion-item
-              *ngFor="let track of genreTracks"
-              (click)="goToTrackDetails(track.artist, track.name)"
-              button>
+            <ion-item *ngFor="let track of genreTracks" (click)="goToTrackDetails(track.artist, track.name)" button>
               <ion-thumbnail slot="start">
                 <ion-img [src]="track.image_url || 'https://via.placeholder.com/150'"></ion-img>
               </ion-thumbnail>

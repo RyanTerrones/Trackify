@@ -1,9 +1,14 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title style="text-align:center; width:100%">Trackify</ion-title>
+  <ion-toolbar style="--background:#85d0ed; --min-height:50px">
+    <div style="display:flex; justify-content:center; align-items:center; height:50px" (click)="goHome()">
+      <div
+        style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center; cursor:pointer">
+        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block" />
+      </div>
+    </div>
   </ion-toolbar>
   <ion-toolbar style="--background:#2b2b2b">
-    <ion-title class="page-title">Charts</ion-title>
+    <ion-title style="text-align:center; color:white; font-size:16px">Charts</ion-title>
   </ion-toolbar>
 </ion-header>
 

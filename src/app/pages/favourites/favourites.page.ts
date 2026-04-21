@@ -67,4 +67,8 @@ export class FavouritesPage implements OnInit {
       this.router.navigate(['/artist-details', item.name]);
     }
   }
+
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 }

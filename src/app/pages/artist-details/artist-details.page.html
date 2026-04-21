@@ -1,6 +1,11 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title style="text-align:center; width:100%">Trackify</ion-title>
+  <ion-toolbar style="--background:#85d0ed; --min-height:50px">
+    <div style="display:flex; justify-content:center; align-items:center; height:50px">
+      <div
+        style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center">
+        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block" />
+      </div>
+    </div>
   </ion-toolbar>
   <ion-toolbar style="--background:#2b2b2b">
     <ion-buttons slot="start">
@@ -22,10 +27,8 @@
 
   <div *ngIf="!isLoading">
     <div class="artist-hero">
-      <img
-        [src]="deezerArtist?.picture_xl || 'https://via.placeholder.com/400'"
-        alt="Artist Image"
-        class="artist-image"/>
+      <img [src]="deezerArtist?.picture_xl || 'https://via.placeholder.com/400'" alt="Artist Image"
+        class="artist-image" />
       <div class="artist-overlay">
         <h1>{{ artistInfo?.name }}</h1>
         <p>{{ deezerArtist?.nb_fan | number }} fans</p>
@@ -52,10 +55,7 @@
       </ion-card-header>
       <ion-card-content>
         <ion-list>
-          <ion-item
-            *ngFor="let track of topTracks"
-            (click)="goToTrackDetails(track.name)"
-            button>
+          <ion-item *ngFor="let track of topTracks" (click)="goToTrackDetails(track.name)" button>
             <ion-thumbnail slot="start">
               <ion-img [src]="track.image_url || 'https://via.placeholder.com/150'"></ion-img>
             </ion-thumbnail>

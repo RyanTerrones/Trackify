@@ -46,4 +46,8 @@ export class HistoryPage implements OnInit {
     this.storageService.clearSearchHistory();
     this.searchHistory = [];
   }
+
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 }

@@ -84,7 +84,11 @@ export class AlbumDetailsPage implements OnInit {
   }
 
   getFeatures(track: any): string {
-  if (!track.contributors || track.contributors.length <= 1) return '';
-  return track.contributors.slice(1).map((c: any) => c.name).join(', ');
-}
+    if (!track.contributors || track.contributors.length <= 1) return '';
+    return track.contributors.slice(1).map((c: any) => c.name).join(', ');
+  }
+
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 }

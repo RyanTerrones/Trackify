@@ -73,4 +73,8 @@ export class ChartsPage implements OnInit {
   onSegmentChange() {
     this.loadCharts();
   }
+
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 }

@@ -107,6 +107,10 @@ export class ArtistDetailsPage implements OnInit {
   }
 
   goToAlbum(id: number) {
-  this.router.navigate(['/album-details', id]);
-}
+    this.router.navigate(['/album-details', id]);
+  }
+
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 }
