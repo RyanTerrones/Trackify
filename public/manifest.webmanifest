@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "short_name": "app",
+  "name": "Trackify",
+  "short_name": "Trackify",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
@@ -8,8 +8,7 @@
     {
       "src": "icons/icon-72x72.png",
       "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "maskable any"
+      "type": "image/png"
     },
     {
       "src": "icons/icon-96x96.png",

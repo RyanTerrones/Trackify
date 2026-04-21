@@ -7,9 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class Deezer {
 
-  private baseUrl = 'https://corsproxy.io/?https://api.deezer.com';
-
-  constructor(private http: HttpClient){}
+  private baseUrl = 'https://corsproxy.io/?url=https://api.deezer.com';
+  constructor(private http: HttpClient) { }
 
   searchTracks(query: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/search?q=${query}`);
@@ -40,7 +39,7 @@ export class Deezer {
   }
 
   getGenres(): Observable<any> {
-  return this.http.get(`${this.baseUrl}/genre`);
-}
+    return this.http.get(`${this.baseUrl}/genre`);
+  }
 
 }

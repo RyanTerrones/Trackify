@@ -33,6 +33,21 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "src",
+                "output": "./"
+              },
+              {
+                "glob": "manifest.webmanifest",
+                "input": "public",
+                "output": "./"
+              },
+              {
+                "glob": "**/*",
+                "input": "public/icons",
+                "output": "./icons"
               }
             ],
             "styles": ["src/global.scss", "src/theme/variables.scss"],

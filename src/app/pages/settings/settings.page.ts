@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonToggle, IonSelect, IonSelectOption, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonSelect, IonSelectOption, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { moonOutline, languageOutline, trashOutline, informationCircleOutline } from 'ionicons/icons';
+import { languageOutline, trashOutline, informationCircleOutline } from 'ionicons/icons';
 import { StorageService } from '../../services/storage';
 import { LanguageService } from '../../services/language';
 
@@ -13,11 +13,10 @@ import { LanguageService } from '../../services/language';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonToggle, IonSelect, IonSelectOption, IonButton, IonIcon]
+  imports: [CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonSelect, IonSelectOption, IonButton, IonIcon]
 })
 export class SettingsPage implements OnInit {
 
-  darkMode: boolean = true;
   selectedLanguage: string = 'en';
 
   languages = [
@@ -31,21 +30,11 @@ export class SettingsPage implements OnInit {
     private router: Router,
     public languageService: LanguageService
   ) {
-    addIcons({ moonOutline, languageOutline, trashOutline, informationCircleOutline });
+    addIcons({ languageOutline, trashOutline, informationCircleOutline });
   }
 
   ngOnInit() {
     this.selectedLanguage = this.languageService.getCurrentLanguage();
-  }
-
-  toggleDarkMode() {
-    if (this.darkMode) {
-      document.documentElement.classList.add('ion-palette-dark');
-      document.documentElement.classList.remove('ion-palette-light');
-    } else {
-      document.documentElement.classList.add('ion-palette-light');
-      document.documentElement.classList.remove('ion-palette-dark');
-    }
   }
 
   onLanguageChange() {

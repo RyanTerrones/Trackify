@@ -6,6 +6,9 @@
       </div>
     </div>
   </ion-toolbar>
+  <ion-toolbar style="--background:#2b2b2b">
+    <ion-title style="text-align:center; color:white; font-size:16px">{{ languageService.translate('home') }}</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -61,29 +64,33 @@
       <div class="featured-row">
         <div class="featured-card"
           (click)="goToTrackDetails(trackOfTheDay.artist.name, trackOfTheDay.name)">
-          <img [src]="trackOfTheDayImage || 'https://via.placeholder.com/400'"
-            class="featured-image" alt="Track of the Day"/>
-          <div class="featured-overlay">
-            <p class="featured-label">{{ languageService.translate('trackOfDay') }}</p>
-            <h2>{{ trackOfTheDay?.name }}</h2>
-            <p>{{ trackOfTheDay?.artist?.name }}</p>
-            <ion-button fill="solid" color="primary" size="small">
-              {{ languageService.translate('listenNow') }}
-            </ion-button>
+          <div class="featured-inner">
+            <img [src]="trackOfTheDayImage || 'https://via.placeholder.com/150'"
+              class="featured-image" alt="Track of the Day"/>
+            <div class="featured-overlay">
+              <p class="featured-label">{{ languageService.translate('trackOfDay') }}</p>
+              <h2>{{ trackOfTheDay?.name }}</h2>
+              <p>{{ trackOfTheDay?.artist?.name }}</p>
+              <ion-button fill="solid" color="primary" size="small">
+                {{ languageService.translate('listenNow') }}
+              </ion-button>
+            </div>
           </div>
         </div>
 
         <div class="featured-card"
           (click)="goToArtistDetails(artistOfTheDay?.name)">
-          <img [src]="artistOfTheDayImage || 'https://via.placeholder.com/400'"
-            class="featured-image" alt="Artist of the Day"/>
-          <div class="featured-overlay">
-            <p class="featured-label">{{ languageService.translate('artistOfDay') }}</p>
-            <h2>{{ artistOfTheDay?.name }}</h2>
-            <p>{{ artistOfTheDay?.listeners | number }} {{ languageService.translate('listeners') }}</p>
-            <ion-button fill="solid" color="primary" size="small">
-              {{ languageService.translate('viewArtist') }}
-            </ion-button>
+          <div class="featured-inner">
+            <img [src]="artistOfTheDayImage || 'https://via.placeholder.com/150'"
+              class="featured-image" alt="Artist of the Day"/>
+            <div class="featured-overlay">
+              <p class="featured-label">{{ languageService.translate('artistOfDay') }}</p>
+              <h2>{{ artistOfTheDay?.name }}</h2>
+              <p>{{ artistOfTheDay?.listeners | number }} {{ languageService.translate('listeners') }}</p>
+              <ion-button fill="solid" color="primary" size="small">
+                {{ languageService.translate('viewArtist') }}
+              </ion-button>
+            </div>
           </div>
         </div>
       </div>
