@@ -1,27 +1,26 @@
 <ion-header>
   <ion-toolbar style="--background:#85d0ed; --min-height:50px">
     <div style="display:flex; justify-content:center; align-items:center; height:50px" (click)="goHome()">
-      <div
-        style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center; cursor:pointer">
-        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block" />
+      <div style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center; cursor:pointer">
+        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block"/>
       </div>
     </div>
   </ion-toolbar>
   <ion-toolbar style="--background:#2b2b2b">
-    <ion-title style="text-align:center; color:white; font-size:16px">Charts</ion-title>
+    <ion-title style="text-align:center; color:white; font-size:16px">{{ languageService.translate('charts') }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-segment [(ngModel)]="selectedSegment" (ionChange)="onSegmentChange()">
     <ion-segment-button value="tracks">
-      <ion-label>Top Tracks</ion-label>
+      <ion-label>{{ languageService.translate('topTracks') }}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="artists">
-      <ion-label>Top Artists</ion-label>
+      <ion-label>{{ languageService.translate('topArtists') }}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="deezer">
-      <ion-label>Deezer Charts</ion-label>
+      <ion-label>{{ languageService.translate('deezerCharts') }}</ion-label>
     </ion-segment-button>
   </ion-segment>
 
@@ -29,7 +28,9 @@
 
   <div *ngIf="!isLoading">
     <ion-list *ngIf="selectedSegment === 'tracks'">
-      <ion-item *ngFor="let track of topTracks; let i = index" (click)="goToTrackDetails(track.artist.name, track.name)"
+      <ion-item
+        *ngFor="let track of topTracks; let i = index"
+        (click)="goToTrackDetails(track.artist.name, track.name)"
         button>
         <div slot="start" class="rank">{{ i + 1 }}</div>
         <ion-thumbnail slot="start">
@@ -43,21 +44,26 @@
     </ion-list>
 
     <ion-list *ngIf="selectedSegment === 'artists'">
-      <ion-item *ngFor="let artist of topArtists; let i = index" (click)="goToArtistDetails(artist.name)" button>
+      <ion-item
+        *ngFor="let artist of topArtists; let i = index"
+        (click)="goToArtistDetails(artist.name)"
+        button>
         <div slot="start" class="rank">{{ i + 1 }}</div>
         <ion-thumbnail slot="start">
           <ion-img [src]="artist.image_url || 'https://via.placeholder.com/150'"></ion-img>
         </ion-thumbnail>
         <ion-label>
           <h2>{{ artist.name }}</h2>
-          <p>{{ artist.listeners | number }} listeners</p>
+          <p>{{ artist.listeners | number }} {{ languageService.translate('listeners') }}</p>
         </ion-label>
       </ion-item>
     </ion-list>
 
     <ion-list *ngIf="selectedSegment === 'deezer'">
-      <ion-item *ngFor="let track of deezerCharts; let i = index"
-        (click)="goToTrackDetails(track.artist.name, track.title)" button>
+      <ion-item
+        *ngFor="let track of deezerCharts; let i = index"
+        (click)="goToTrackDetails(track.artist.name, track.title)"
+        button>
         <div slot="start" class="rank">{{ i + 1 }}</div>
         <ion-thumbnail slot="start">
           <ion-img [src]="track.album.cover_medium || 'https://via.placeholder.com/150'"></ion-img>

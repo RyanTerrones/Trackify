@@ -6,6 +6,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonSegment, 
 import { Lastfm } from '../services/lastfm';
 import { Deezer } from '../services/deezer';
 import { StorageService } from '../services/storage';
+import { LanguageService } from '../services/language';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +33,6 @@ export class HomePage implements OnInit {
   selectedGenre: string = '';
   genreTracks: any[] = [];
   isLoadingGenre: boolean = false;
-
   genres: any[] = [];
 
   constructor(
@@ -40,8 +40,9 @@ export class HomePage implements OnInit {
     private deezer: Deezer,
     private storageService: StorageService,
     private router: Router,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    public languageService: LanguageService
+  ) {}
 
   ngOnInit() {
     this.loadFeatured();

@@ -1,9 +1,8 @@
 <ion-header>
   <ion-toolbar style="--background:#85d0ed; --min-height:50px">
-    <div style="display:flex; justify-content:center; align-items:center; height:50px">
-      <div
-        style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center">
-        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block" />
+    <div style="display:flex; justify-content:center; align-items:center; height:50px" (click)="goHome()">
+      <div style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center; cursor:pointer">
+        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block"/>
       </div>
     </div>
   </ion-toolbar>
@@ -14,9 +13,7 @@
         <ion-icon name="heart-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title style="text-align:center; color:white; font-size:16px">
-      {{ track }}
-    </ion-title>
+    <ion-title style="text-align:center; color:white; font-size:16px">{{ track }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="toggleFavourite()">
         <ion-icon [name]="isFavourite ? 'heart' : 'heart-outline'"></ion-icon>
@@ -33,7 +30,7 @@
 
   <div *ngIf="!isLoading">
     <ion-card *ngIf="deezerTrack">
-      <img [src]="deezerTrack.album.cover_big" alt="Album Art" />
+      <img [src]="deezerTrack.album.cover_big" alt="Album Art"/>
       <ion-card-header>
         <ion-card-title>{{ trackInfo?.name }}</ion-card-title>
         <ion-card-subtitle (click)="goToArtist()" style="cursor:pointer; color:#3f6675">
@@ -43,35 +40,38 @@
       <ion-card-content>
 
         <div class="audio-player" *ngIf="deezerTrack?.preview">
-          <p>30 Second Preview</p>
+          <p>30 {{ languageService.translate('playPreview') }}</p>
           <ion-button expand="block" (click)="playTrack()" *ngIf="!isPlaying">
             <ion-icon name="play-outline" slot="start"></ion-icon>
-            Play Preview
+            {{ languageService.translate('playPreview') }}
           </ion-button>
           <ion-button expand="block" (click)="togglePlay()" *ngIf="isPlaying" color="medium">
             <ion-icon name="pause-outline" slot="start"></ion-icon>
-            Pause
+            {{ languageService.translate('pause') }}
           </ion-button>
         </div>
 
         <div class="rating-section">
-          <p>Your Rating</p>
+          <p>{{ languageService.translate('yourRating') }}</p>
           <div class="stars">
-            <ion-icon *ngFor="let star of [1,2,3,4,5]" [name]="star <= userRating ? 'star' : 'star-outline'"
-              (click)="setRating(star)" style="font-size:32px; cursor:pointer; color:#3f6675">
+            <ion-icon
+              *ngFor="let star of [1,2,3,4,5]"
+              [name]="star <= userRating ? 'star' : 'star-outline'"
+              (click)="setRating(star)"
+              style="font-size:32px; cursor:pointer; color:#3f6675">
             </ion-icon>
           </div>
         </div>
 
         <div class="track-info" *ngIf="trackInfo?.wiki">
-          <h3>About this Track</h3>
+          <h3>{{ languageService.translate('aboutTrack') }}</h3>
           <p>{{ trackInfo.wiki.summary | slice:0:300 }}...</p>
         </div>
 
         <div class="track-stats">
           <ion-item>
             <ion-label>
-              <h3>Listeners</h3>
+              <h3>{{ languageService.translate('listeners') }}</h3>
               <p>{{ trackInfo?.listeners || deezerTrack?.rank }}</p>
             </ion-label>
           </ion-item>

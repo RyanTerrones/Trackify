@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar style="--background:#85d0ed; --min-height:50px">
+    <div style="display:flex; justify-content:center; align-items:center; height:50px" (click)="goHome()">
+      <div style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center; cursor:pointer">
+        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block"/>
+      </div>
+    </div>
+  </ion-toolbar>
+  <ion-toolbar style="--background:#2b2b2b">
+    <ion-title style="text-align:center; color:white; font-size:16px">{{ languageService.translate('settings') }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="section-title">{{ languageService.translate('theme') }}</div>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="moon-outline" slot="start" style="color:#85d0ed"></ion-icon>
+      <ion-label>{{ languageService.translate('darkMode') }}</ion-label>
+      <ion-toggle [(ngModel)]="darkMode" (ionChange)="toggleDarkMode()" slot="end"></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <div class="section-title">{{ languageService.translate('language') }}</div>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="language-outline" slot="start" style="color:#85d0ed"></ion-icon>
+      <ion-label>{{ languageService.translate('language') }}</ion-label>
+      <ion-select [(ngModel)]="selectedLanguage" (ionChange)="onLanguageChange()" interface="popover">
+        <ion-select-option *ngFor="let lang of languages" [value]="lang.code">
+          {{ lang.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div class="section-title">Data</div>
+  <ion-list>
+    <ion-item button (click)="clearAllData()">
+      <ion-icon name="trash-outline" slot="start" style="color:red"></ion-icon>
+      <ion-label style="color:red">{{ languageService.translate('clearAllData') }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div class="section-title">{{ languageService.translate('about') }}</div>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="information-circle-outline" slot="start" style="color:#85d0ed"></ion-icon>
+      <ion-label>
+        <h2>Trackify</h2>
+        <p>{{ languageService.translate('version') }} 1.0.0</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>{{ languageService.translate('developer') }}</h2>
+        <p>Ryan Terrones</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>{{ languageService.translate('apisUsed') }}</h2>
+        <p>Last.fm API, Deezer API</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>{{ languageService.translate('college') }}</h2>
+        <p>ATU Galway</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

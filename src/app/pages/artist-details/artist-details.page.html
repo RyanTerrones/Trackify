@@ -1,9 +1,8 @@
 <ion-header>
   <ion-toolbar style="--background:#85d0ed; --min-height:50px">
-    <div style="display:flex; justify-content:center; align-items:center; height:50px">
-      <div
-        style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center">
-        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block" />
+    <div style="display:flex; justify-content:center; align-items:center; height:50px" (click)="goHome()">
+      <div style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center; cursor:pointer">
+        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block"/>
       </div>
     </div>
   </ion-toolbar>
@@ -11,9 +10,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title style="text-align:center; color:white; font-size:16px">
-      {{ artistName }}
-    </ion-title>
+    <ion-title style="text-align:center; color:white; font-size:16px">{{ artistName }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="toggleFavourite()">
         <ion-icon [name]="isFavourite ? 'heart' : 'heart-outline'"></ion-icon>
@@ -27,17 +24,19 @@
 
   <div *ngIf="!isLoading">
     <div class="artist-hero">
-      <img [src]="deezerArtist?.picture_xl || 'https://via.placeholder.com/400'" alt="Artist Image"
-        class="artist-image" />
+      <img
+        [src]="deezerArtist?.picture_xl || 'https://via.placeholder.com/400'"
+        alt="Artist Image"
+        class="artist-image"/>
       <div class="artist-overlay">
         <h1>{{ artistInfo?.name }}</h1>
-        <p>{{ deezerArtist?.nb_fan | number }} fans</p>
+        <p>{{ deezerArtist?.nb_fan | number }} {{ languageService.translate('fans') }}</p>
       </div>
     </div>
 
     <ion-card>
       <ion-card-header>
-        <ion-card-title>About</ion-card-title>
+        <ion-card-title>{{ languageService.translate('about') }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <p *ngIf="artistInfo?.bio?.summary">
@@ -51,17 +50,20 @@
 
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Top Tracks</ion-card-title>
+        <ion-card-title>{{ languageService.translate('topTracks') }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
-          <ion-item *ngFor="let track of topTracks" (click)="goToTrackDetails(track.name)" button>
+          <ion-item
+            *ngFor="let track of topTracks"
+            (click)="goToTrackDetails(track.name)"
+            button>
             <ion-thumbnail slot="start">
               <ion-img [src]="track.image_url || 'https://via.placeholder.com/150'"></ion-img>
             </ion-thumbnail>
             <ion-label>
               <h2>{{ track.name }}</h2>
-              <p>{{ track.playcount | number }} plays</p>
+              <p>{{ track.playcount | number }} {{ languageService.translate('plays') }}</p>
             </ion-label>
           </ion-item>
         </ion-list>
@@ -70,7 +72,7 @@
 
     <ion-card *ngIf="topAlbums.length > 0">
       <ion-card-header>
-        <ion-card-title>Albums</ion-card-title>
+        <ion-card-title>{{ languageService.translate('albums') }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
@@ -88,7 +90,7 @@
 
     <ion-card *ngIf="artistInfo?.tags?.tag">
       <ion-card-header>
-        <ion-card-title>Tags</ion-card-title>
+        <ion-card-title>{{ languageService.translate('tags') }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <div class="tags">

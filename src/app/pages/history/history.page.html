@@ -1,27 +1,29 @@
 <ion-header>
   <ion-toolbar style="--background:#85d0ed; --min-height:50px">
     <div style="display:flex; justify-content:center; align-items:center; height:50px" (click)="goHome()">
-      <div
-        style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center; cursor:pointer">
-        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block" />
+      <div style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center; cursor:pointer">
+        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block"/>
       </div>
     </div>
   </ion-toolbar>
   <ion-toolbar style="--background:#2b2b2b">
-    <ion-title style="text-align:center; color:white; font-size:16px">History</ion-title>
+    <ion-title style="text-align:center; color:white; font-size:16px">{{ languageService.translate('history') }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div *ngIf="searchHistory.length === 0" class="empty-state">
     <ion-icon name="time-outline"></ion-icon>
-    <h2>No Search History</h2>
-    <p>Your recent searches will appear here</p>
+    <h2>{{ languageService.translate('noHistory') }}</h2>
+    <p>{{ languageService.translate('noHistoryDesc') }}</p>
   </div>
 
   <div *ngIf="searchHistory.length > 0">
     <ion-list>
-      <ion-item *ngFor="let query of searchHistory" (click)="searchAgain(query)" button>
+      <ion-item
+        *ngFor="let query of searchHistory"
+        (click)="searchAgain(query)"
+        button>
         <ion-icon slot="start" name="search-outline" style="color: #3f6675"></ion-icon>
         <ion-label>
           <h2>{{ query }}</h2>
@@ -32,7 +34,7 @@
 
     <div class="clear-all-container">
       <ion-button fill="outline" (click)="clearHistory()" style="--border-color:white; --color:white">
-        Clear All
+        {{ languageService.translate('clearAll') }}
       </ion-button>
     </div>
   </div>

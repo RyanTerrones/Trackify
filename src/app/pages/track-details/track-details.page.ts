@@ -9,6 +9,7 @@ import { Lastfm } from '../../services/lastfm';
 import { Deezer } from '../../services/deezer';
 import { StorageService } from '../../services/storage';
 import { PlayerService } from '../../services/player';
+import { LanguageService } from '../../services/language';
 
 @Component({
   selector: 'app-track-details',
@@ -34,7 +35,8 @@ export class TrackDetailsPage implements OnInit {
     private lastfm: Lastfm,
     private deezer: Deezer,
     private storageService: StorageService,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    public languageService: LanguageService
   ) {
     addIcons({ heartOutline, heart, shareOutline, star, starOutline, playOutline, pauseOutline });
   }
@@ -48,7 +50,6 @@ export class TrackDetailsPage implements OnInit {
   loadTrackInfo() {
     this.lastfm.getTrackInfo(this.artist, this.track).subscribe((data: any) => {
       this.trackInfo = data.track;
-      console.log(data.track);
       this.isLoading = false;
     });
 

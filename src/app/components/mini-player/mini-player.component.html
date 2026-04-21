@@ -4,10 +4,8 @@
   </div>
 
   <div class="player-content">
-    <img
-      [src]="currentTrack.album?.cover_medium || 'https://via.placeholder.com/150'"
-      class="track-art"
-      alt="Album Art"/>
+    <img [src]="currentTrack.album?.cover_medium || 'https://via.placeholder.com/150'" class="track-art"
+      alt="Album Art" />
 
     <div class="track-info">
       <p class="track-name">{{ currentTrack.title }}</p>
@@ -26,7 +24,9 @@
       </ion-button>
     </div>
 
-    <div class="player-actions">
+    <div class="player-actions" (click)="$event.stopPropagation()">
+      <input type="range" min="0" max="1" step="0.01" [value]="volume" (input)="onVolumeChange($event)"
+        class="volume-slider" />
       <ion-button fill="clear" (click)="toggleFavourite()">
         <ion-icon [name]="isFavourite ? 'heart' : 'heart-outline'" style="color:#3f6675"></ion-icon>
       </ion-button>

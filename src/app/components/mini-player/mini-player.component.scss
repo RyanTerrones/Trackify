@@ -77,9 +77,20 @@
       align-items: center;
     }
   }
+
+  .volume-slider {
+    width: 80px;
+    accent-color: #3f6675;
+    cursor: pointer;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }

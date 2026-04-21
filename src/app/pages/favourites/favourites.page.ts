@@ -6,6 +6,7 @@ import { addIcons } from 'ionicons';
 import { trashOutline, musicalNoteOutline, personOutline, heartOutline } from 'ionicons/icons';
 import { StorageService } from '../../services/storage';
 import { Deezer } from '../../services/deezer';
+import { LanguageService } from '../../services/language';
 
 @Component({
   selector: 'app-favourites',
@@ -21,7 +22,8 @@ export class FavouritesPage implements OnInit {
   constructor(
     private storageService: StorageService,
     private router: Router,
-    private deezer: Deezer
+    private deezer: Deezer,
+    public languageService: LanguageService
   ) {
     addIcons({ trashOutline, musicalNoteOutline, personOutline, heartOutline });
   }

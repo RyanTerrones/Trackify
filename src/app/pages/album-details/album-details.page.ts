@@ -7,13 +7,14 @@ import { heartOutline, heart, star, starOutline } from 'ionicons/icons';
 import { Deezer } from '../../services/deezer';
 import { StorageService } from '../../services/storage';
 import { DurationPipe } from '../../pipes/duration-pipe';
+import { LanguageService } from '../../services/language';
 
 @Component({
   selector: 'app-album-details',
   templateUrl: './album-details.page.html',
   styleUrls: ['./album-details.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonIcon, IonSpinner, IonItem, IonLabel, IonThumbnail, IonImg, IonList, DurationPipe]
+  imports: [CommonModule, DurationPipe, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonIcon, IonSpinner, IonItem, IonLabel, IonThumbnail, IonImg, IonList]
 })
 export class AlbumDetailsPage implements OnInit {
 
@@ -28,7 +29,8 @@ export class AlbumDetailsPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private deezer: Deezer,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public languageService: LanguageService
   ) {
     addIcons({ heartOutline, heart, star, starOutline });
   }
@@ -78,14 +80,14 @@ export class AlbumDetailsPage implements OnInit {
     this.router.navigate(['/track-details', this.album.artist.name, track.title]);
   }
 
-  formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-IE', { year: 'numeric', month: 'long', day: 'numeric' });
-  }
-
   getFeatures(track: any): string {
     if (!track.contributors || track.contributors.length <= 1) return '';
     return track.contributors.slice(1).map((c: any) => c.name).join(', ');
+  }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-IE', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 
   goHome() {

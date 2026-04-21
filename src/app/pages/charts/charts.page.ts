@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonSegment, IonSegmentButton, IonLabel, IonList, IonItem, IonThumbnail, IonImg, IonSpinner, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/angular/standalone';
 import { Lastfm } from '../../services/lastfm';
 import { Deezer } from '../../services/deezer';
+import { LanguageService } from '../../services/language';
 
 @Component({
   selector: 'app-charts',
@@ -24,8 +25,9 @@ export class ChartsPage implements OnInit {
   constructor(
     private lastfm: Lastfm,
     private deezer: Deezer,
-    private router: Router
-  ) { }
+    private router: Router,
+    public languageService: LanguageService
+  ) {}
 
   ngOnInit() {
     this.loadCharts();
@@ -33,7 +35,6 @@ export class ChartsPage implements OnInit {
 
   loadCharts() {
     this.isLoading = true;
-
     this.lastfm.getTopTracks().subscribe((data: any) => {
       this.topTracks = data.tracks.track;
       this.topTracks.forEach(track => {

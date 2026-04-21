@@ -5,6 +5,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel
 import { addIcons } from 'ionicons';
 import { timeOutline, trashOutline, searchOutline } from 'ionicons/icons';
 import { StorageService } from '../../services/storage';
+import { LanguageService } from '../../services/language';
 
 @Component({
   selector: 'app-history',
@@ -19,7 +20,8 @@ export class HistoryPage implements OnInit {
 
   constructor(
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    public languageService: LanguageService
   ) {
     addIcons({ timeOutline, trashOutline, searchOutline });
   }

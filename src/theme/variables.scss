@@ -18,3 +18,31 @@ body {
   font-size: 16px;
   font-weight: 500;
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-color-primary: #85d0ed;
+  }
+}
+
+.ion-palette-dark {
+  --ion-background-color: #121212;
+  --ion-background-color-rgb: 18, 18, 18;
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255, 255, 255;
+  --ion-card-background: #1e1e1e;
+  --ion-item-background: #1e1e1e;
+  --ion-toolbar-background: #2b2b2b;
+  --ion-tab-bar-background: #2b2b2b;
+}
+
+.ion-palette-light {
+  --ion-background-color: #ffffff;
+  --ion-background-color-rgb: 255, 255, 255;
+  --ion-text-color: #000000;
+  --ion-text-color-rgb: 0, 0, 0;
+  --ion-card-background: #f4f4f4;
+  --ion-item-background: #ffffff;
+  --ion-toolbar-background: #ffffff;
+  --ion-tab-bar-background: #ffffff;
+}

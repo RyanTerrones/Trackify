@@ -7,6 +7,7 @@ import { heartOutline, heart } from 'ionicons/icons';
 import { Lastfm } from '../../services/lastfm';
 import { Deezer } from '../../services/deezer';
 import { StorageService } from '../../services/storage';
+import { LanguageService } from '../../services/language';
 
 @Component({
   selector: 'app-artist-details',
@@ -30,7 +31,8 @@ export class ArtistDetailsPage implements OnInit {
     private router: Router,
     private lastfm: Lastfm,
     private deezer: Deezer,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public languageService: LanguageService
   ) {
     addIcons({ heartOutline, heart });
   }

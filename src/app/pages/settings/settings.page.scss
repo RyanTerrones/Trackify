@@ -1,0 +1,39 @@
+ion-content {
+  --background: #1a1a1a;
+}
+
+ion-list {
+  background: #2b2b2b;
+  margin: 8px 12px;
+  border-radius: 12px;
+}
+
+ion-item {
+  --background: #2b2b2b;
+  --color: white;
+  --border-color: #3a3a3a;
+
+  h2 {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  p {
+    color: #888;
+    font-size: 12px;
+  }
+}
+
+.section-title {
+  color: #85d0ed;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 16px 16px 4px 16px;
+}
+
+ion-toggle {
+  --track-background-checked: #85d0ed;
+}

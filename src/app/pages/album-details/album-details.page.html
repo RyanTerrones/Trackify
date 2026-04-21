@@ -1,9 +1,8 @@
 <ion-header>
   <ion-toolbar style="--background:#85d0ed; --min-height:50px">
-    <div style="display:flex; justify-content:center; align-items:center; height:50px">
-      <div
-        style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center">
-        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block" />
+    <div style="display:flex; justify-content:center; align-items:center; height:50px" (click)="goHome()">
+      <div style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center; cursor:pointer">
+        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block"/>
       </div>
     </div>
   </ion-toolbar>
@@ -11,9 +10,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title style="text-align:center; color:white; font-size:16px">
-      {{ album?.title }}
-    </ion-title>
+    <ion-title style="text-align:center; color:white; font-size:16px">{{ album?.title }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="toggleFavourite()">
         <ion-icon [name]="isFavourite ? 'heart' : 'heart-outline'"></ion-icon>
@@ -27,23 +24,29 @@
 
   <div *ngIf="!isLoading">
     <div class="album-hero">
-      <img [src]="album?.cover_big || 'https://via.placeholder.com/400'" alt="Album Cover" class="album-image" />
+      <img
+        [src]="album?.cover_big || 'https://via.placeholder.com/400'"
+        alt="Album Cover"
+        class="album-image"/>
       <div class="album-overlay">
         <h1>{{ album?.title }}</h1>
         <p>{{ album?.artist?.name }}</p>
-        <p>Released: {{ formatDate(album?.release_date) }}</p>
-        <p>{{ album?.nb_tracks }} tracks</p>
+        <p>{{ languageService.translate('released') }}: {{ formatDate(album?.release_date) }}</p>
+        <p>{{ album?.nb_tracks }} {{ languageService.translate('tracks') }}</p>
       </div>
     </div>
 
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Your Rating</ion-card-title>
+        <ion-card-title>{{ languageService.translate('yourRating') }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <div class="stars">
-          <ion-icon *ngFor="let star of [1,2,3,4,5]" [name]="star <= userRating ? 'star' : 'star-outline'"
-            (click)="setRating(star)" style="font-size:32px; cursor:pointer; color:#3f6675">
+          <ion-icon
+            *ngFor="let star of [1,2,3,4,5]"
+            [name]="star <= userRating ? 'star' : 'star-outline'"
+            (click)="setRating(star)"
+            style="font-size:32px; cursor:pointer; color:#3f6675">
           </ion-icon>
         </div>
       </ion-card-content>
@@ -51,11 +54,14 @@
 
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Tracks</ion-card-title>
+        <ion-card-title>{{ languageService.translate('tracks') }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
-          <ion-item *ngFor="let track of tracks; let i = index" (click)="goToTrackDetails(track)" button>
+          <ion-item
+            *ngFor="let track of tracks; let i = index"
+            (click)="goToTrackDetails(track)"
+            button>
             <div slot="start" class="track-number">{{ i + 1 }}</div>
             <ion-label>
               <h2>{{ track.title }}</h2>

@@ -93,4 +93,11 @@ export class MiniPlayerComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
     clearInterval(this.progressInterval);
   }
+
+  volume: number = 0.5;
+
+  onVolumeChange(event: any) {
+    this.volume = event.target.value;
+    this.playerService.getAudio().volume = this.volume;
+  }
 }

@@ -1,35 +1,40 @@
 <ion-header>
   <ion-toolbar style="--background:#85d0ed; --min-height:50px">
     <div style="display:flex; justify-content:center; align-items:center; height:50px" (click)="goHome()">
-      <div
-        style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center; cursor:pointer">
-        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block" />
+      <div style="border:2px solid black; border-radius:10px; padding:4px; width:180px; height:44px; overflow:hidden; display:flex; justify-content:center; align-items:center; cursor:pointer">
+        <img src="assets/icon/Trackify_logo.png" style="height:150px; object-fit:contain; display:block"/>
       </div>
     </div>
   </ion-toolbar>
   <ion-toolbar style="--background:#2b2b2b">
-    <ion-title style="text-align:center; color:white; font-size:16px">Favourites</ion-title>
+    <ion-title style="text-align:center; color:white; font-size:16px">{{ languageService.translate('favourites') }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div *ngIf="favourites.length === 0" class="empty-state">
     <ion-icon name="heart-outline"></ion-icon>
-    <h2>No Favourites Yet</h2>
-    <p>Start adding tracks and artists to your favourites</p>
+    <h2>{{ languageService.translate('noFavourites') }}</h2>
+    <p>{{ languageService.translate('noFavouritesDesc') }}</p>
   </div>
 
   <ion-list *ngIf="favourites.length > 0">
-    <ion-item *ngFor="let item of favourites" (click)="goToItem(item)" button>
+    <ion-item
+      *ngFor="let item of favourites"
+      (click)="goToItem(item)"
+      button>
       <ion-thumbnail slot="start">
         <ion-img [src]="item.image_url || 'https://via.placeholder.com/150'"></ion-img>
       </ion-thumbnail>
       <ion-label>
         <h2>{{ item.name }}</h2>
         <p *ngIf="item.type === 'track'">{{ item.artist }}</p>
-        <p *ngIf="item.type === 'artist'">Artist</p>
+        <p *ngIf="item.type === 'artist'">{{ languageService.translate('artists') }}</p>
       </ion-label>
-      <ion-button slot="end" fill="clear" (click)="$event.stopPropagation(); removeFavourite(item.id)">
+      <ion-button
+        slot="end"
+        fill="clear"
+        (click)="$event.stopPropagation(); removeFavourite(item.id)">
         <ion-icon name="trash-outline" style="color: red"></ion-icon>
       </ion-button>
     </ion-item>
