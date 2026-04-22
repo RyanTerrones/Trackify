@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Injectable({
   providedIn: 'root'
@@ -22,18 +23,36 @@ export class PlayerService {
       this.isPlayingSubject.next(false);
       this.playNext();
     });
+    this.requestNotificationPermission();
+  }
+
+  async requestNotificationPermission() {
+    await LocalNotifications.requestPermissions();
   }
 
   setQueue(tracks: any[]) {
     this.queueSubject.next(tracks);
   }
 
-  playTrack(track: any) {
+  async playTrack(track: any) {
     this.audio.pause();
     this.audio.src = track.preview;
     this.audio.play();
     this.currentTrackSubject.next(track);
     this.isPlayingSubject.next(true);
+
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: 'Now Playing on Trackify',
+          body: `${track.title} by ${track.artist.name}`,
+          id: 1,
+          schedule: { at: new Date(Date.now() + 100) },
+          smallIcon: 'ic_launcher',
+          iconColor: '#85d0ed'
+        }
+      ]
+    });
   }
 
   togglePlay() {

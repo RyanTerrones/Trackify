@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Share } from '@capacitor/share';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton, IonIcon, IonSpinner, IonItem, IonLabel } from '@ionic/angular/standalone';
+import { Clipboard } from '@capacitor/clipboard';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton, IonIcon, IonSpinner, IonItem, IonLabel, IonToast } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { heartOutline, heart, shareOutline, star, starOutline, playOutline, pauseOutline } from 'ionicons/icons';
+import { heartOutline, heart, shareOutline, star, starOutline, playOutline, pauseOutline, copyOutline } from 'ionicons/icons';
 import { Lastfm } from '../../services/lastfm';
 import { Deezer } from '../../services/deezer';
 import { StorageService } from '../../services/storage';
@@ -16,7 +17,7 @@ import { LanguageService } from '../../services/language';
   templateUrl: './track-details.page.html',
   styleUrls: ['./track-details.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton, IonIcon, IonSpinner, IonItem, IonLabel]
+  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton, IonIcon, IonSpinner, IonItem, IonLabel, IonToast]
 })
 export class TrackDetailsPage implements OnInit {
 
@@ -28,6 +29,7 @@ export class TrackDetailsPage implements OnInit {
   isFavourite: boolean = false;
   userRating: number = 0;
   isPlaying: boolean = false;
+  showCopiedToast: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,7 +40,7 @@ export class TrackDetailsPage implements OnInit {
     private playerService: PlayerService,
     public languageService: LanguageService
   ) {
-    addIcons({ heartOutline, heart, shareOutline, star, starOutline, playOutline, pauseOutline });
+    addIcons({ heartOutline, heart, shareOutline, star, starOutline, playOutline, pauseOutline, copyOutline });
   }
 
   ngOnInit() {
@@ -102,6 +104,13 @@ export class TrackDetailsPage implements OnInit {
   setRating(rating: number) {
     this.userRating = rating;
     this.storageService.saveRating(this.track, rating);
+  }
+
+  async copyToClipboard() {
+    await Clipboard.write({
+      string: `${this.track} by ${this.artist}`
+    });
+    this.showCopiedToast = true;
   }
 
   async shareTrack() {
